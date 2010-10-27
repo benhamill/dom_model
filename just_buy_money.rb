@@ -2,7 +2,6 @@ require 'strategy'
 
 class JustBuyMoney < Strategy
   def counts
-    @copper_count = 7
     @p_count = 0
   end
 
