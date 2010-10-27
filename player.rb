@@ -14,9 +14,14 @@ class Player
     self.draw
   end
 
+  def play card, options = {}
+    @play_area << remove_card_from_hand card
+    self.send card, options
+  end
+
   def trash *cards
     cards.each do |card|
-      @hand.delete_at(@hand.index(card))
+      remove_card_from_hand card
     end
   end
 
@@ -53,5 +58,11 @@ class Player
     discard
     @turn_number += 1
     draw
+  end
+
+  private
+
+  def remove_card_from_hand card
+    @hand.delete_at(@hand.index(card))
   end
 end
