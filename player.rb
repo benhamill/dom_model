@@ -2,8 +2,7 @@ require 'card_costs'
 require 'card_effects'
 
 class Player
-  attr_accessor :actions_left, :buys_left
-  attr_reader :hand, :turn_number, :deck, :discard_pile, :play_area
+  attr_reader :hand, :turn_number, :deck, :discard_pile, :play_area, :actions_left, :buys_left
 
   def initialize
     @deck = [:estate, :estate, :estate, :copper, :copper, :copper, :copper, :copper, :copper, :copper].shuffle
@@ -11,13 +10,20 @@ class Player
     @discard_pile = []
     @play_area = []
     @turn_number = 1
+    @actions_left = 1
+    @buys_left = 1
 
     self.draw
   end
 
   def play card, options = {}
+    @actions_left -= 1
     @play_area << hand.delete_first(card)
     self.send card, options
+  end
+
+  def pass_actions
+    @actions_left = 0
   end
 
   def trash *cards
@@ -45,7 +51,12 @@ class Player
   end
 
   def buy card
+    @buys_left -= 1
     @discard_pile << card
+  end
+
+  def pass_buys
+    @buys_left = 0
   end
 
   def discard
@@ -58,6 +69,8 @@ class Player
   def end_turn
     discard
     @turn_number += 1
+    @actions_left = 1
+    @buys_left = 1
     draw
   end
 end

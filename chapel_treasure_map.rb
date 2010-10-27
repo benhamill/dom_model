@@ -21,11 +21,14 @@ class ChapelTreasureMap < Strategy
       cards.delete_first(:copper) if cards.count(:copper) >= 4 and @tm_count < 2
       @copper_count -= cards.count(:copper)
 
-      unless cards.empty?
+      if cards.empty?
+        @player.pass_actions # avoid infinite loop
+      else
         @player.play :chapel, :cards => cards
         puts "Playing Chapel with: #{cards.inspect}" if verbose?
       end
     else
+      @player.pass_actions
       puts "Doing nothing." if verbose?
     end
   end
@@ -48,6 +51,7 @@ class ChapelTreasureMap < Strategy
       puts "Buying Gold." if verbose?
     else
       puts "Buying nothing." if verbose?
+      @player.pass_buys
     end
   end
 

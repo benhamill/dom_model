@@ -6,7 +6,8 @@ class JustBuyMoney < Strategy
   end
 
   def action_phase
-    # Nothing for this strategy.
+    # Never do any actions
+    @player.pass_actions
   end
 
   def buy_phase
@@ -20,6 +21,9 @@ class JustBuyMoney < Strategy
     elsif @player.can_afford? :silver
       @player.buy :silver
       puts "Buying Silver." if verbose?
+    else
+      @player.pass_buys
+      puts "Buying nothing." if verbose?
     end
   end
 

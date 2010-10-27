@@ -22,9 +22,6 @@ class Strategy
     counts
 
     loop do
-      @player.actions_left = 1
-      @player.buys_left = 1
-
       if verbose?
         puts "Turn ##{@player.turn_number}"
         puts "Hand: #{@player.hand.inspect}"
@@ -41,7 +38,6 @@ class Strategy
       puts "Action Phase:" if verbose?
       while @player.actions_left > 0
         action_phase
-        @player.actions_left -= 1
         puts "Play Area: #{@player.play_area.inspect}" if verbose?
         puts "Actions: #{@player.actions_left} Buys: #{@player.buys_left}" if verbose?
       end
@@ -49,7 +45,6 @@ class Strategy
       puts "Buy Phase:" if verbose?
       while @player.buys_left > 0
         buy_phase
-        @player.buys_left -= 1
         puts "Actions: #{@player.actions_left} Buys: #{@player.buys_left}" if verbose?
       end
 
