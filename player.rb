@@ -1,3 +1,6 @@
+require 'card_costs'
+require 'card_effects'
+
 class Player
   attr_reader :hand, :turn_number
 
@@ -47,23 +50,5 @@ class Player
     discard
     @turn_number += 1
     draw
-  end
-
-  def treasure_map
-    trash :treasure_map, :treasure_map
-    4.times { @deck << :gold }
-  end
-
-  def chapel *cards
-    trash *cards
-  end
-
-  def hand_value
-    hand.inject(0) do |coins, card|
-      coins += 1 if card == :copper
-      coins += 3 if card == :gold
-
-      coins
-    end
   end
 end

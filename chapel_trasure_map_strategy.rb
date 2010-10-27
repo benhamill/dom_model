@@ -32,19 +32,19 @@ class ChapelTreasureMap < Strategy
   end
 
   def buy_phase
-    if @tm_count < 2 and @p.hand_value >= 4
+    if @tm_count < 2 and @p.can_afford?(:treasure_map)
       @p.buy :treasure_map
       puts "Buying Treasure Map." if verbose?
       @tm_count += 1
-    elsif @chapel_count < 1 and @p.hand_value >= 2
+    elsif @chapel_count < 1 and @p.can_afford?(:chapel)
       @p.buy :chapel
       puts "Buying Chapel." if verbose?
       @chapel_count += 1
-    elsif @p.hand_value >= 8
+    elsif @p.can_afford?(:province)
       @p.buy :province
       puts "Buying Province." if verbose?
       @p_count += 1
-    elsif @p.hand_value >= 6
+    elsif @p.can_afford?(:gold)
       @p.buy :gold
       puts "Buying Gold." if verbose?
     end
