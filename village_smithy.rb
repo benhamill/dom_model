@@ -2,10 +2,10 @@ require 'strategy'
 
 class VillageSmithy < Strategy
   def action_phase
-    if hand.include? :village
+    if @player.hand.include? :village
       puts "Playing Village." if verbose?
       @player.play :village
-    elsif hand.include? :smithy
+    elsif @player.hand.include? :smithy
       puts "Playing Smithy." if verbose?
       @player.play :smithy
     else

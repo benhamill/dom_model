@@ -26,12 +26,8 @@ class Strategy
     counts
 
     loop do
-      if verbose?
-        puts "Turn ##{@player.turn_number}"
-        puts "Hand: #{@player.hand.inspect}"
-        puts "Deck: #{@player.deck.inspect}"
-        puts "Discard Pile: #{@player.discard_pile.inspect}"
-      end
+      puts "\n--------------- TURN #{@player.turn_number} ---------------" if verbose?
+      puts @player.inspect if verbose?
 
       if @player.turn_number > @turn_limit
         puts "Exiting for too many turns." if verbose?
@@ -41,12 +37,14 @@ class Strategy
 
       puts "Action Phase:" if verbose?
       while @player.actions_left > 0
+        puts "Hand: #{@player.hand.inspect}" if verbose?
         action_phase
         puts "Play Area: #{@player.play_area.inspect}" if verbose?
         puts "Actions: #{@player.actions_left} Buys: #{@player.buys_left}" if verbose?
       end
 
-      puts "Buy Phase:" if verbose?
+      puts "Buy Phase ($#{@player.hand_value}):" if verbose?
+      puts "Hand: #{@player.hand.inspect}" if verbose?
       while @player.buys_left > 0
         buy_phase
         puts "Actions: #{@player.actions_left} Buys: #{@player.buys_left}" if verbose?
