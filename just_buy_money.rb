@@ -1,10 +1,6 @@
 require 'strategy'
 
 class JustBuyMoney < Strategy
-  def counts
-    @province_count = 0
-  end
-
   def action_phase
     # Never do any actions
     @player.pass_actions
@@ -25,9 +21,5 @@ class JustBuyMoney < Strategy
       @player.pass_buys
       puts "Buying nothing." if verbose?
     end
-  end
-
-  def stop_conditions
-    @province_count >= 6
   end
 end

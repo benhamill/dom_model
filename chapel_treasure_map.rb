@@ -2,10 +2,11 @@ require 'strategy'
 
 class ChapelTreasureMap < Strategy
   def counts
+    super
+
     @tm_count = 0
     @chapel_count = 0
     @copper_count = 7
-    @province_count = 0
   end
 
   def action_phase
@@ -53,9 +54,5 @@ class ChapelTreasureMap < Strategy
       puts "Buying nothing." if verbose?
       @player.pass_buys
     end
-  end
-
-  def stop_conditions
-    @province_count >= 6
   end
 end

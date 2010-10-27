@@ -1,6 +1,10 @@
 require 'player'
 
 class Strategy
+  # Feel free to override these two:
+  def counts; @province_count = 0; end
+  def stop_conditions; @province_count >= 6; end
+
   def initialize verbose = false, turn_limit = 100
     @games_over_limit = 0
     @games_array = []
