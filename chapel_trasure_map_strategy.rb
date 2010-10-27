@@ -11,8 +11,9 @@ class ChapelTreasureMap < Strategy
 
   def action_phase
     if @p.hand.count(:treasure_map) == 2
-      @p.treasure_map
+      @p.play :treasure_map
       puts "Playing Treasure Maps." if verbose?
+
       if @played_treasure_maps
         puts "Playing second TMs." if verbose?
       else
@@ -26,7 +27,8 @@ class ChapelTreasureMap < Strategy
       cards = @p.hand.reject { |card| keepers.include? card }
       cards.delete_at(cards.index(:copper)) if cards.count(:copper) >= 4 and @tm_count < 2
       @copper_count -= cards.count(:copper)
-      @p.chapel(*cards)
+
+      @p.play :chapel, :cards => cards
       puts "Playing Chapel with: #{cards.inspect}" if verbose?
     end
   end
