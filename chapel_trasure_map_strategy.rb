@@ -52,8 +52,6 @@ class ChapelTreasureMap < Strategy
 
   def stop_conditions
     if @p_count >= 6
-      @games_array << @p.turn_number
-      puts @p.inspect if verbose?
       return true
     end
   end

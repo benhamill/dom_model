@@ -32,7 +32,11 @@ class Strategy
 
       action_phase
       buy_phase
-      break if stop_conditions
+      if stop_conditions
+        @games_array << @p.turn_number
+        puts @p.inspect if verbose?
+        break
+      end
 
       @p.end_turn
     end
