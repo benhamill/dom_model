@@ -55,9 +55,3 @@ class ChapelTreasureMap < Strategy
     @province_count >= 6
   end
 end
-
-class Array
-  def delete_first item
-    self.delete_at(self.index(item))
-  end
-end
