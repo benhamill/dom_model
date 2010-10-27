@@ -8,6 +8,7 @@ class Player
     @deck = [:estate, :estate, :estate, :copper, :copper, :copper, :copper, :copper, :copper, :copper].shuffle
     @hand = []
     @discard = []
+    @play_area = []
     @turn_number = 1
 
     self.draw
@@ -28,8 +29,8 @@ class Player
   def draw(num = 5)
     cards = @deck.pop(num)
 
-    if cards.length < 5
-      more = 5 - cards.length
+    if cards.length < num
+      more = num - cards.length
       shuffle
       cards += @deck.pop(more)
     end
@@ -43,7 +44,9 @@ class Player
 
   def discard
     @discard += @hand
+    @discard += @play_area
     @hand = []
+    @play_area = []
   end
 
   def end_turn
