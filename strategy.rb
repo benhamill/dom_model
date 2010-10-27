@@ -18,41 +18,52 @@ class Strategy
   end
 
   def play_game
-    @p = Player.new
+    @player = Player.new
     counts
 
     loop do
+      @player.actions_left = 1
+      @player.buys_left = 1
+
       if verbose?
-        puts "Turn ##{@p.turn_number}"
-        puts "Hand: #{@p.hand.inspect}"
-        puts "Deck: #{@p.deck.inspect}"
-        puts "Discard Pile: #{@p.discard_pile.inspect}"
+        puts "Turn ##{@player.turn_number}"
+        puts "Hand: #{@player.hand.inspect}"
+        puts "Deck: #{@player.deck.inspect}"
+        puts "Discard Pile: #{@player.discard_pile.inspect}"
       end
 
-      if @p.turn_number > @turn_limit
+      if @player.turn_number > @turn_limit
         puts "Exiting for too many turns." if verbose?
         @games_over_limit += 1
         break
       end
 
       puts "Action Phase:" if verbose?
-      action_phase
-      puts "Play Area: #{@p.play_area.inspect}" if verbose?
+      while @player.actions_left > 0
+        action_phase
+        @player.actions_left -= 1
+        puts "Play Area: #{@player.play_area.inspect}" if verbose?
+        puts "Actions: #{@player.actions_left} Buys: #{@player.buys_left}" if verbose?
+      end
 
       puts "Buy Phase:" if verbose?
-      buy_phase
+      while @player.buys_left > 0
+        buy_phase
+        @player.buys_left -= 1
+        puts "Actions: #{@player.actions_left} Buys: #{@player.buys_left}" if verbose?
+      end
 
       if stop_conditions
-        @games_array << @p.turn_number
+        @games_array << @player.turn_number
         break
       end
 
-      @p.end_turn
+      @player.end_turn
     end
   end
 
   def report iterations
-    puts @p.inspect # Show last player object.
+    puts @player.inspect # Show last player object.
 
     puts "Games played: #{iterations}"
     puts "Games over #{@turn_limit} turns: #{@games_over_limit}"

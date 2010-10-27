@@ -2,6 +2,7 @@ require 'card_costs'
 require 'card_effects'
 
 class Player
+  attr_accessor :actions_left, :buys_left
   attr_reader :hand, :turn_number, :deck, :discard_pile, :play_area
 
   def initialize

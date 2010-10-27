@@ -2,7 +2,7 @@ require 'strategy'
 
 class JustBuyMoney < Strategy
   def counts
-    @p_count = 0
+    @province_count = 0
   end
 
   def action_phase
@@ -10,20 +10,20 @@ class JustBuyMoney < Strategy
   end
 
   def buy_phase
-    if @p.can_afford? :province
-      @p.buy :province
+    if @player.can_afford? :province
+      @player.buy :province
       puts "Buying Province." if verbose?
-      @p_count += 1
-    elsif @p.can_afford? :gold
-      @p.buy :gold
+      @province_count += 1
+    elsif @player.can_afford? :gold
+      @player.buy :gold
       puts "Buying Gold." if verbose?
-    elsif @p.can_afford? :silver
-      @p.buy :silver
+    elsif @player.can_afford? :silver
+      @player.buy :silver
       puts "Buying Silver." if verbose?
     end
   end
 
   def stop_conditions
-    @p_count >= 6
+    @province_count >= 6
   end
 end

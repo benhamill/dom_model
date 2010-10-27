@@ -9,6 +9,8 @@ class Player
     :province => 8,
 
     :chapel => 2,
+    :village => 3,
+    :smithy => 4,
     :treasure_map => 4,
   }
 
