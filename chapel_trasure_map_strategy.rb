@@ -51,8 +51,6 @@ class ChapelTreasureMap < Strategy
   end
 
   def stop_conditions
-    if @p_count >= 6
-      return true
-    end
+    @p_count >= 6
   end
 end
