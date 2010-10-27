@@ -11,7 +11,7 @@ class Strategy
     !!@verbose
   end
 
-  def run iterations=100_000
+  def run iterations=1
     iterations.times { play_game }
     report(iterations)
   end
