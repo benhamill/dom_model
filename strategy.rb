@@ -34,7 +34,6 @@ class Strategy
       buy_phase
       if stop_conditions
         @games_array << @p.turn_number
-        puts @p.inspect if verbose?
         break
       end
 
@@ -43,7 +42,7 @@ class Strategy
   end
 
   def report iterations
-    puts @p.inspect
+    puts @p.inspect # Show last player object.
 
     puts "Games played: #{iterations}"
     puts "Games over 100 turns: #{@games_over_100}"
