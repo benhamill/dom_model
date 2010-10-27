@@ -13,7 +13,7 @@ class Player
 
   def village options
     draw 1
-    self.actions_left += 2
+    @actions_left += 2
   end
 
   def smithy options
