@@ -11,6 +11,17 @@ class JustBuyMoney < Strategy
   end
 
   def buy_phase
+    if @p.can_afford? :province
+      @p.buy :province
+      puts "Buying Province." if verbose?
+      @p_count += 1
+    elsif @p.can_afford? :gold
+      @p.buy :gold
+      puts "Buying Gold." if verbose?
+    elsif @p.can_afford? :silver
+      @p.buy :silver
+      puts "Buying Silver." if verbose?
+    end
   end
 
   def stop_conditions
