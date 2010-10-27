@@ -4,7 +4,6 @@ class ChapelTreasureMap < Strategy
   def counts
     @tm_count = 0
     @chapel_count = 0
-    @played_treasure_maps = false
     @copper_count = 7
     @p_count = 0
   end
@@ -13,23 +12,21 @@ class ChapelTreasureMap < Strategy
     if @p.hand.count(:treasure_map) == 2
       @p.play :treasure_map
       puts "Playing Treasure Maps." if verbose?
-
-      if @played_treasure_maps
-        puts "Playing second TMs." if verbose?
-      else
-        @played_treasure_maps = true
-      end
     elsif @p.hand.include? :chapel
       keepers = [:chapel, :treasure_map, :province, :gold]
 
       keepers << :copper if @copper_count <= 4 and @tm_count < 2
 
       cards = @p.hand.reject { |card| keepers.include? card }
-      cards.delete_at(cards.index(:copper)) if cards.count(:copper) >= 4 and @tm_count < 2
+      cards.delete_first(:copper) if cards.count(:copper) >= 4 and @tm_count < 2
       @copper_count -= cards.count(:copper)
 
-      @p.play :chapel, :cards => cards
-      puts "Playing Chapel with: #{cards.inspect}" if verbose?
+      unless cards.empty?
+        @p.play :chapel, :cards => cards
+        puts "Playing Chapel with: #{cards.inspect}" if verbose?
+      end
+    else
+      puts "Doing nothing." if verbose?
     end
   end
 
@@ -49,10 +46,18 @@ class ChapelTreasureMap < Strategy
     elsif @p.can_afford?(:gold)
       @p.buy :gold
       puts "Buying Gold." if verbose?
+    else
+      puts "Buying nothing." if verbose?
     end
   end
 
   def stop_conditions
     @p_count >= 6
+  end
+end
+
+class Array
+  def delete_first item
+    self.delete_at(self.index(item))
   end
 end

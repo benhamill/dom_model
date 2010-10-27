@@ -2,12 +2,12 @@ require 'card_costs'
 require 'card_effects'
 
 class Player
-  attr_reader :hand, :turn_number
+  attr_reader :hand, :turn_number, :deck, :discard_pile, :play_area
 
   def initialize
     @deck = [:estate, :estate, :estate, :copper, :copper, :copper, :copper, :copper, :copper, :copper].shuffle
     @hand = []
-    @discard = []
+    @discard_pile = []
     @play_area = []
     @turn_number = 1
 
@@ -15,19 +15,19 @@ class Player
   end
 
   def play card, options = {}
-    @play_area << remove_card_from_hand card
+    @play_area << hand.delete_first(card)
     self.send card, options
   end
 
   def trash *cards
     cards.each do |card|
-      remove_card_from_hand card
+      hand.delete_first card
     end
   end
 
   def shuffle
-    @deck += @discard
-    @discard = []
+    @deck += @discard_pile
+    @discard_pile = []
     @deck.shuffle
   end
 
@@ -44,12 +44,12 @@ class Player
   end
 
   def buy card
-    @discard << card
+    @discard_pile << card
   end
 
   def discard
-    @discard += @hand
-    @discard += @play_area
+    @discard_pile += @hand
+    @discard_pile += @play_area
     @hand = []
     @play_area = []
   end
@@ -58,11 +58,5 @@ class Player
     discard
     @turn_number += 1
     draw
-  end
-
-  private
-
-  def remove_card_from_hand card
-    @hand.delete_at(@hand.index(card))
   end
 end
