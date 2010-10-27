@@ -19,6 +19,7 @@ class Player
   def hand_value
     hand.inject(0) do |coins, card|
       coins += 1 if card == :copper
+      coins += 2 if card == :silver
       coins += 3 if card == :gold
 
       coins
