@@ -18,8 +18,8 @@ class JustBuyMoney < Strategy
       @player.buy :silver
       puts "Buying Silver." if verbose?
     else
-      @player.pass_buys
-      puts "Buying nothing." if verbose?
+      @player.buy :copper
+      puts "Buying Copper." if verbose?
     end
   end
 end
